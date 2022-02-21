@@ -1,5 +1,6 @@
 package com.access_and_expose.noroffassignment_6.dataaccess.controller;
 
+import com.access_and_expose.noroffassignment_6.dataaccess.CustomerDAO;
 import com.access_and_expose.noroffassignment_6.dataaccess.model.Customer;
 import com.access_and_expose.noroffassignment_6.dataaccess.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class CustomerController {
 
     @GetMapping
     public List<Customer> getCustomers() {
-        return customerService.getCustomers();
+        return customerService.getAllCustomers();
     }
+
+
+
 }
