@@ -5,7 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.OneToOne;
 
 @ToString
 @EqualsAndHashCode
@@ -15,6 +17,7 @@ import javax.persistence.GeneratedValue;
 @Table
 @NoArgsConstructor
 public class Customer {
+
     @javax.persistence.Id
     @Id
     @GeneratedValue
@@ -23,17 +26,16 @@ public class Customer {
     private String lastName;
     private int phone;
     private String email;
-    private String country;
-    private int postalCode;
+    @OneToOne (fetch = FetchType.LAZY)
+    private CustomerCountry customerCountry;
 
-    public Customer(Long id, String firstName, String lastName, int phone, String email, String country, int postalCode) {
+    public Customer(Long id, String firstName, String lastName, int phone, String email, CustomerCountry customerCountry) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.country = country;
-        this.postalCode = postalCode;
+        this.customerCountry = customerCountry;
     }
 
     public Long getId() {
@@ -74,21 +76,5 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public int getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(int postalCode) {
-        this.postalCode = postalCode;
     }
 }
