@@ -10,4 +10,14 @@ public class CustomerSpender {
     public CustomerSpender(String customerExpenses) {
         this.customerExpenses = customerExpenses;
     }
+
+    public String getCustomerExpenses() {
+        return customerExpenses;
+    }
+
+    public void setCustomerExpenses(String customerExpenses) {
+        this.customerExpenses = customerExpenses;
+    }
+
+    //TODO: add getters and setters
 }
