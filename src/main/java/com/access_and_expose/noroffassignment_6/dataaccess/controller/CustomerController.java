@@ -3,14 +3,12 @@ package com.access_and_expose.noroffassignment_6.dataaccess.controller;
 import com.access_and_expose.noroffassignment_6.dataaccess.model.Customer;
 import com.access_and_expose.noroffassignment_6.dataaccess.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/customer")
+@RequestMapping(value ="api/v1/customer", method = RequestMethod.GET)
 public class CustomerController {
     private final CustomerService customerService;
 
