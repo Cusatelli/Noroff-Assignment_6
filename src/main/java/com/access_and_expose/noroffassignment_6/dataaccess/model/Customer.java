@@ -1,24 +1,13 @@
 package com.access_and_expose.noroffassignment_6.dataaccess.model;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
-@ToString
-@EqualsAndHashCode
-@Setter
-@Getter
 @Entity
 @Table
-@NoArgsConstructor
 public class Customer {
 
-    @javax.persistence.Id
     @Id
     @GeneratedValue
     private Long id;
@@ -28,6 +17,8 @@ public class Customer {
     private String email;
     @OneToOne (fetch = FetchType.LAZY)
     private CustomerCountry customerCountry;
+
+    public Customer() {}
 
     public Customer(Long id, String firstName, String lastName, int phone, String email, CustomerCountry customerCountry) {
         this.id = id;
@@ -76,5 +67,25 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public CustomerCountry getCustomerCountry() {
+        return customerCountry;
+    }
+
+    public void setCustomerCountry(CustomerCountry customerCountry) {
+        this.customerCountry = customerCountry;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone=" + phone +
+                ", email='" + email + '\'' +
+                ", customerCountry=" + customerCountry +
+                '}';
     }
 }
