@@ -1,18 +1,14 @@
 package com.access_and_expose.noroffassignment_6.dataaccess.model;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Setter
-@Getter
 @Entity
 @Table
-public class CustomerCountry { // TODO: Add Country and Zip to Customer in array.
+public class CustomerCountry {
 
     @Id
     @GeneratedValue
@@ -48,7 +44,7 @@ public class CustomerCountry { // TODO: Add Country and Zip to Customer in array
         this.id = id;
     }
 
-    @javax.persistence.Id
+    @Id
     public Long getId() {
         return id;
     }
