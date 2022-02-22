@@ -1,7 +1,7 @@
 package com.access_and_expose.noroffassignment_6.controller;
 
-import com.access_and_expose.noroffassignment_6.model.Customer;
-import com.access_and_expose.noroffassignment_6.data.ICustomerRepository;
+import com.access_and_expose.noroffassignment_6.model.customer.Customer;
+import com.access_and_expose.noroffassignment_6.data.customer.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

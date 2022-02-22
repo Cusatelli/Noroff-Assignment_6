@@ -1,4 +1,4 @@
-package com.access_and_expose.noroffassignment_6.model;
+package com.access_and_expose.noroffassignment_6.model.customer;
 
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -32,47 +32,36 @@ public class Customer {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String name) {
         this.firstName = name;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String surname) {
         this.lastName = surname;
     }
-
     public int getPhone() {
         return phone;
     }
-
     public void setPhone(int phoneNumber) {
         this.phone = phoneNumber;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public CustomerCountry getCustomerCountry() {
         return customerCountry;
     }
-
     public void setCustomerCountry(CustomerCountry customerCountry) {
         this.customerCountry = customerCountry;
     }

@@ -1,4 +1,4 @@
-package com.access_and_expose.noroffassignment_6.model;
+package com.access_and_expose.noroffassignment_6.model.customer;
 
 import org.springframework.data.relational.core.mapping.Table;
 

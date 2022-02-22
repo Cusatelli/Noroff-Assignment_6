@@ -1,7 +1,8 @@
-package com.access_and_expose.noroffassignment_6.data;
+package com.access_and_expose.noroffassignment_6.data.customer;
 
-import com.access_and_expose.noroffassignment_6.model.Customer;
-import com.access_and_expose.noroffassignment_6.model.CustomerCountry;
+import com.access_and_expose.noroffassignment_6.data.SQLiteConnectionHelper;
+import com.access_and_expose.noroffassignment_6.model.customer.Customer;
+import com.access_and_expose.noroffassignment_6.model.customer.CustomerCountry;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
