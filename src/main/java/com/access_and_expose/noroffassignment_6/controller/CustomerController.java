@@ -22,6 +22,11 @@ public class CustomerController {
         return this.customerRepository.getAllCustomers();
     }
 
+    @GetMapping(value = "customers/range/")
+    public Collection<Customer> getCustomersInRange(String offset, String limit) {
+        return this.customerRepository.getCustomersInRange(offset, limit);
+    }
+
     @PostMapping(value = "customer")
     public Customer addNewCustomer(@RequestBody Customer customer) {
         return null;

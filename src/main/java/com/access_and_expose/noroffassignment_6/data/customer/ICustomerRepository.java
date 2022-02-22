@@ -11,6 +11,7 @@ import java.util.HashMap;
 public interface ICustomerRepository {
 
     Collection<Customer> getAllCustomers();
+    Collection<Customer> getCustomersInRange(String offset, String limit);
     Customer getCustomerById(String customerId);
     Collection<Customer> getCustomerByName(String firstName);
     Customer addNewCustomer(Customer customer);

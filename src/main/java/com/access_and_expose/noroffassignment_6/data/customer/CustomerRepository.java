@@ -4,9 +4,11 @@ import com.access_and_expose.noroffassignment_6.data.SQLiteConnectionHelper;
 import com.access_and_expose.noroffassignment_6.model.customer.Customer;
 import com.access_and_expose.noroffassignment_6.model.customer.CustomerCountry;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 @Service
@@ -19,19 +21,26 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Customer getCustomerById(String customerId) {
+    public Collection<Customer> getCustomersInRange(@PathVariable String offset, @PathVariable String limit) {
+        String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId BETWEEN ? AND ?";
+        return getCustomers(SQLQuery, offset, String.valueOf(Integer.parseInt(offset) + Integer.parseInt(limit)));
+    }
+
+    @Override
+    public Customer getCustomerById(@PathVariable String customerId) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId = ?";
         return getCustomers(SQLQuery, customerId).get(0);
     }
 
     @Override
-    public ArrayList<Customer> getCustomerByName(String firstName) {
+    public ArrayList<Customer> getCustomerByName(@PathVariable String firstName) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE ?";
         return getCustomers(SQLQuery, firstName);
     }
 
     private ArrayList<Customer> getCustomers(String SQLQuery, String... params) {
         ArrayList<Customer> customers = new ArrayList<>();
+
         try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
             for (int index = 1; index < params.length + 1; index++) {
