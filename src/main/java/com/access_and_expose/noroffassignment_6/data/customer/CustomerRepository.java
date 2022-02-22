@@ -26,7 +26,7 @@ public class CustomerRepository implements ICustomerRepository {
 
     @Override
     public ArrayList<Customer> getCustomerByName(String firstName) {
-        String SQLQuery = "SELECT * FROM Customer WHERE FirstName LIKE ?";
+        String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE ?";
         return getCustomers(SQLQuery, firstName);
     }
 
