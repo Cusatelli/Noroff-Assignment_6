@@ -1,25 +1,15 @@
 package com.access_and_expose.noroffassignment_6.model.customer;
 
-import org.springframework.data.relational.core.mapping.Table;
-
-import javax.persistence.*;
-
-@Entity
-@Table
 public class Customer {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;
     private int phone;
     private String email;
-    @OneToOne (fetch = FetchType.LAZY)
     private CustomerCountry customerCountry;
 
     public Customer() {}
-
     public Customer(Long id, String firstName, String lastName, int phone, String email, CustomerCountry customerCountry) {
         this.id = id;
         this.firstName = firstName;
