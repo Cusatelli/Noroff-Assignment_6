@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IArtistRepository {
 
-    Artist getArtistById(String artistId);
-    Artist getArtistByName(String artistName);
-
+    Artist getById(String artistId);
+    Artist getByName(String artistName);
 }
