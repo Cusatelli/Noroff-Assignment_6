@@ -9,12 +9,7 @@ public class Track {
     private Long unitPrice;
 
     public Track() {}
-
-    public Track(Long id,
-                 String name,
-                 Long genreId,
-                 Long albumId,
-                 Long unitPrice) {
+    public Track(Long id, String name, Long genreId, Long albumId, Long unitPrice) {
         this.id = id;
         this.name = name;
         this.genreId = genreId;
@@ -25,39 +20,30 @@ public class Track {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Long getGenreId() {
         return genreId;
     }
-
     public void setGenreId(Long genreId) {
         this.genreId = genreId;
     }
-
     public Long getAlbumId() {
         return albumId;
     }
-
     public void setAlbumId(Long albumId) {
         this.albumId = albumId;
     }
-
     public Long getUnitPrice() {
         return unitPrice;
     }
-
     public void setUnitPrice(Long unitPrice) {
         this.unitPrice = unitPrice;
     }
