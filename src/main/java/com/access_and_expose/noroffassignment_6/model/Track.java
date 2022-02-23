@@ -1,19 +1,19 @@
-package com.access_and_expose.noroffassignment_6.model.track;
+package com.access_and_expose.noroffassignment_6.model;
 
 public class Track {
 
     private Long id;
     private String name;
-    private Long genreId;
     private Long albumId;
+    private Long genreId;
     private Long unitPrice;
 
     public Track() {}
-    public Track(Long id, String name, Long genreId, Long albumId, Long unitPrice) {
+    public Track(Long id, String name, Long albumId, Long genreId, Long unitPrice) {
         this.id = id;
         this.name = name;
-        this.genreId = genreId;
         this.albumId = albumId;
+        this.genreId = genreId;
         this.unitPrice = unitPrice;
     }
 
