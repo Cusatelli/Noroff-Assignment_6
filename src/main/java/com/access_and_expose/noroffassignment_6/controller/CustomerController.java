@@ -49,12 +49,12 @@ public class CustomerController {
         return this.customerRepository.getByName(firstName);
     }
 
-    @PutMapping(value = "customer/update={customerId}")
+    @PutMapping(value = "/customer/update={customerId}")
     public Customer updateExistingCustomer(@PathVariable String customerId, @RequestBody Customer customer) {
         return this.customerRepository.update(customer); // TODO: use customer ID
     }
 
-    @DeleteMapping(value = "customer/delete={customerId}")
+    @DeleteMapping(value = "/customer/delete={customerId}")
     public boolean deleteCustomer(@PathVariable String customerId) {
         return this.customerRepository.delete(customerId);
     }
