@@ -1,13 +1,15 @@
 package com.access_and_expose.noroffassignment_6.controller;
 
-import com.access_and_expose.noroffassignment_6.data.artist.IArtistRepository;
-import com.access_and_expose.noroffassignment_6.model.artist.Artist;
+import com.access_and_expose.noroffassignment_6.data.repository.artist.IArtistRepository;
+import com.access_and_expose.noroffassignment_6.model.Artist;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collection;
 
 @RestController
 @Tag(name = "Artist")
@@ -26,7 +28,7 @@ public class ArtistController {
     }
 
     @GetMapping("/artist/name={artistName}")
-    public Artist getArtistByName(@PathVariable String artistName) {
+    public Collection<Artist> getArtistByName(@PathVariable String artistName) {
         return this.artistRepository.getByName(artistName);
     }
 }
