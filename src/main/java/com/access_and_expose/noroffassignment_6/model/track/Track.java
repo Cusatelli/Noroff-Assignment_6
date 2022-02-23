@@ -1,18 +1,7 @@
 package com.access_and_expose.noroffassignment_6.model.track;
 
-import com.access_and_expose.noroffassignment_6.model.genre.Genre;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table
 public class Track {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private String name;
     private Long genreId;
