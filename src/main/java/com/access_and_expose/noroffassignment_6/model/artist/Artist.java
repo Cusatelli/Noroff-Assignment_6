@@ -1,16 +1,7 @@
 package com.access_and_expose.noroffassignment_6.model.artist;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table
 public class Artist {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private String name;
 
