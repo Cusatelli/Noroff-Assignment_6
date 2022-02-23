@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ITrackRepository {
 
-    Track getTrackById(String trackId);
-    Track getTrackByName(String trackName);
-
+    Track getById(String trackId);
+    Track getByName(String trackName);
 }

@@ -8,19 +8,20 @@ import java.sql.*;
 
 @Service
 public class TrackRepository implements ITrackRepository {
+
     @Override
-    public Track getTrackById(String trackId) {
+    public Track getById(String trackId) {
         String SQLQuery = "SELECT TrackId, Name, AlbumId, GenreId, UnitPrice FROM Track WHERE TrackId LIKE ?";
-        return getTrack(SQLQuery, trackId);
+        return getFromSQLDatabase(SQLQuery, trackId);
     }
 
     @Override
-    public Track getTrackByName(String trackName) {
+    public Track getByName(String trackName) {
         String SQLQuery = "SELECT TrackId, Name, AlbumId, GenreId, UnitPrice FROM Track WHERE Name LIKE ?";
-        return getTrack(SQLQuery, trackName);
+        return getFromSQLDatabase(SQLQuery, trackName);
     }
 
-    private Track getTrack(String SQLQuery, String... params) {
+    private Track getFromSQLDatabase(String SQLQuery, String... params) {
         Track track = null;
         try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
