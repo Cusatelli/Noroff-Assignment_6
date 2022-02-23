@@ -1,6 +1,6 @@
-package com.access_and_expose.noroffassignment_6.data.customer;
+package com.access_and_expose.noroffassignment_6.data.repository.customer;
 
-import com.access_and_expose.noroffassignment_6.data.SQLiteConnectionHelper;
+import com.access_and_expose.noroffassignment_6.data.factory.DatabaseConnectionFactory;
 import com.access_and_expose.noroffassignment_6.model.customer.Customer;
 import com.access_and_expose.noroffassignment_6.model.customer.CustomerCountry;
 
@@ -10,40 +10,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @Service
 public class CustomerRepository implements ICustomerRepository {
 
-    @Override
-    public Collection<Customer> getAll() {
-        String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
-        return getCustomers(SQLQuery);
+    private final DatabaseConnectionFactory databaseConnectionFactory;
+
+    public CustomerRepository(DatabaseConnectionFactory databaseConnectionFactory) {
+        this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
     @Override
-    public Collection<Customer> getAllInRange(@PathVariable int offset, @PathVariable int limit) {
+    public Collection<Customer> getAll() {
+        String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
+        return getFromSQLDatabase(SQLQuery);
+    }
+
+    @Override
+    public Collection<Customer> getAll(@PathVariable int offset, @PathVariable int limit) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId BETWEEN ? AND ?";
-        return getCustomers(SQLQuery, String.valueOf(offset), String.valueOf(offset + limit));
+        return getFromSQLDatabase(SQLQuery, String.valueOf(offset), String.valueOf(offset + limit));
     }
 
     @Override
     public Customer getById(@PathVariable String customerId) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId = ?";
-        return getCustomers(SQLQuery, customerId).get(0);
+        return getFromSQLDatabase(SQLQuery, customerId).get(0);
     }
 
     @Override
     public Collection<Customer> getByName(@PathVariable String firstName) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE ?";
-        return getCustomers(SQLQuery, firstName);
+        return getFromSQLDatabase(SQLQuery, firstName);
     }
 
     @Override
     public Customer add(@PathVariable Customer customer) {
         String SQLQuery = "INSERT INTO Customer(FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
+
+        try (Connection connection = databaseConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, customer.getFirstName());
@@ -71,9 +77,10 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Customer update(Customer item) {
+    public boolean update(Customer item) {
         String SQLQuery = "UPDATE Customer SET FirstName = ?, LastName = ?, Phone = ?, Email = ?, Country = ?, PostalCode = ? WHERE CustomerId = ?";
-        try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
+
+        try (Connection connection = databaseConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
 
             preparedStatement.setString(1, item.getFirstName());
@@ -83,18 +90,19 @@ public class CustomerRepository implements ICustomerRepository {
             preparedStatement.setString(5, item.getCustomerCountry().getCountryName());
             preparedStatement.setString(6, item.getCustomerCountry().getPostalCode());
 
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
-        return null;
+        return false;
     }
 
     @Override
-    public boolean delete(String id) {
+    public boolean deleteById(String id) {
         String SQLQuery = "DELETE FROM Customer WHERE CustomerID = ?";
 
-        try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
+        try (Connection connection = databaseConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
 
             preparedStatement.setString(1, id);
@@ -107,31 +115,31 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Customer getCustomerHighestSpender() {
+    public LinkedHashMap<Customer, Integer> getCustomerHighestSpender() {
         return null;
     }
 
-@Override
-        public LinkedHashMap<String, Integer> sortByCountry() {
-            String SQLQuery = "SELECT Country, COUNT(CustomerId) FROM Customer " +
-                    "GROUP BY Country " +
-                    "ORDER BY COUNT(CustomerId) DESC";
-            LinkedHashMap<String, Integer> countryCount = new LinkedHashMap<>();
-            try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
-                PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    String customerCountry = resultSet.getString("Country");
-                    String customerCountryCount = resultSet.getString("COUNT(CustomerId)");
-                    System.out.println("Country: " + customerCountry + " : " + customerCountryCount);
-                    countryCount.put(customerCountry, Integer.parseInt(customerCountryCount));
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            return countryCount;
-        }
+    @Override
+    public LinkedHashMap<String, Integer> sortByCountry() {
+        String SQLQuery = "SELECT Country, COUNT(CustomerId) FROM Customer " +
+                "GROUP BY Country " +
+                "ORDER BY COUNT(CustomerId) DESC";
 
+        LinkedHashMap<String, Integer> countryCount = new LinkedHashMap<>();
+        try (Connection connection = databaseConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String customerCountry = resultSet.getString("Country");
+                String customerCountryCount = resultSet.getString("COUNT(CustomerId)");
+                System.out.println("Country: " + customerCountry + " : " + customerCountryCount);
+                countryCount.put(customerCountry, Integer.parseInt(customerCountryCount));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return countryCount;
+    }
 
     /**
      * Helper Method
@@ -139,9 +147,10 @@ public class CustomerRepository implements ICustomerRepository {
      * @param params
      * @return
      */
-    private ArrayList<Customer> getCustomers(String SQLQuery, String... params) {
+    @Override
+    public ArrayList<Customer> getFromSQLDatabase(String SQLQuery, String... params) {
         ArrayList<Customer> customers = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
+        try (Connection connection = databaseConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
             for (int index = 1; index < params.length + 1; index++) {
                 preparedStatement.setString(index, params[index - 1]);
