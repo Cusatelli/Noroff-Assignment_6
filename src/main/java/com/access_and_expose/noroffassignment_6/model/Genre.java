@@ -1,4 +1,4 @@
-package com.access_and_expose.noroffassignment_6.model.genre;
+package com.access_and_expose.noroffassignment_6.model;
 
 public class Genre {
 
