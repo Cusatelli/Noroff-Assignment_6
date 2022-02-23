@@ -5,7 +5,7 @@ public class CustomerCountry {
     private Long id;
     private String countryName;
     private String postalCode;
-    
+
     public CustomerCountry() { }
     public CustomerCountry(String countryName, String postalCode) {
         this.countryName = countryName;
