@@ -4,6 +4,8 @@ import com.access_and_expose.noroffassignment_6.model.customer.CustomerCountry;
 import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 @Repository
 public interface ICustomerRepository {
 
@@ -14,6 +16,6 @@ public interface ICustomerRepository {
     Customer add(Customer customer);
     Customer update(Customer customer);
     boolean delete(String customerId);
+    LinkedHashMap<String, Integer> sortByCountry();
     Customer getCustomerHighestSpender();
-    HashMap<CustomerCountry, Integer> getCustomersInCountry();
 }
