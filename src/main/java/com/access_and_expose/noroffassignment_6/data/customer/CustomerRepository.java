@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @Service
 public class CustomerRepository implements ICustomerRepository {
@@ -75,12 +76,12 @@ public class CustomerRepository implements ICustomerRepository {
         try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
 
-            preparedStatement.setString(1,item.getFirstName());
+            preparedStatement.setString(1, item.getFirstName());
             preparedStatement.setString(2, item.getLastName());
             preparedStatement.setInt(3, item.getPhone());
             preparedStatement.setString(4, item.getEmail());
             preparedStatement.setString(5, item.getCustomerCountry().getCountryName());
-            preparedStatement.setString(6,item.getCustomerCountry().getPostalCode());
+            preparedStatement.setString(6, item.getCustomerCountry().getPostalCode());
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -110,10 +111,27 @@ public class CustomerRepository implements ICustomerRepository {
         return null;
     }
 
-    @Override
-    public HashMap<CustomerCountry, Integer> getCustomersInCountry() {
-        return null;
-    }
+@Override
+        public LinkedHashMap<String, Integer> sortByCountry() {
+            String SQLQuery = "SELECT Country, COUNT(CustomerId) FROM Customer " +
+                    "GROUP BY Country " +
+                    "ORDER BY COUNT(CustomerId) DESC";
+            LinkedHashMap<String, Integer> countryCount = new LinkedHashMap<>();
+            try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
+                PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String customerCountry = resultSet.getString("Country");
+                    String customerCountryCount = resultSet.getString("COUNT(CustomerId)");
+                    System.out.println("Country: " + customerCountry + " : " + customerCountryCount);
+                    countryCount.put(customerCountry, Integer.parseInt(customerCountryCount));
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return countryCount;
+        }
+
 
     /**
      * Helper Method
