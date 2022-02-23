@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IGenreRepository {
 
-    Genre getGenreById(String genreId);
-    Genre getGenreByName(String genreName);
-
+    Genre getById(String genreId);
+    Genre getByName(String genreName);
 }

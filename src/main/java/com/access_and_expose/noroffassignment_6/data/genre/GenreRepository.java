@@ -10,18 +10,18 @@ import java.sql.*;
 public class GenreRepository implements IGenreRepository {
 
     @Override
-    public Genre getGenreById(String genreId) {
+    public Genre getById(String genreId) {
         String SQLQuery = "SELECT * FROM Genre WHERE GenreId LIKE ?";
-        return getGenre(SQLQuery, genreId);
+        return getFromSQLDatabase(SQLQuery, genreId);
     }
 
     @Override
-    public Genre getGenreByName(String genreName) {
+    public Genre getByName(String genreName) {
         String SQLQuery = "SELECT * FROM Genre WHERE Name LIKE ?";
-        return getGenre(SQLQuery, genreName);
+        return getFromSQLDatabase(SQLQuery, genreName);
     }
 
-    private Genre getGenre(String SQLQuery, String... params) {
+    private Genre getFromSQLDatabase(String SQLQuery, String... params) {
         Genre genre = null;
         try (Connection connection = DriverManager.getConnection(SQLiteConnectionHelper.getConnectionString())) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
