@@ -6,6 +6,7 @@ import com.access_and_expose.noroffassignment_6.data.customer.ICustomerRepositor
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 
 @RestController
 @Tag(name = "Customer")
@@ -56,5 +57,10 @@ public class CustomerController {
     @DeleteMapping(value = "customer/delete={customerId}")
     public boolean deleteCustomer(@PathVariable String customerId) {
         return this.customerRepository.delete(customerId);
+    }
+
+    @GetMapping(value = "/customer/sortByCountry")
+    public LinkedHashMap<String, Integer> getCustomerOrderedByCountry() {
+        return this.customerRepository.sortByCountry();
     }
 }
