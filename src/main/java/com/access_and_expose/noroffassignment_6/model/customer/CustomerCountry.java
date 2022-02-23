@@ -30,4 +30,13 @@ public class CustomerCountry {
     public Long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "CustomerCountry{" +
+                "id=" + id +
+                ", countryName='" + countryName + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                '}';
+    }
 }
