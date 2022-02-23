@@ -1,23 +1,10 @@
 package com.access_and_expose.noroffassignment_6.model.genre;
 
-import org.springframework.data.relational.core.mapping.Table;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.HashMap;
-
-@Entity
-@Table
 public class Genre {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private String name;
-
     public Genre() {}
-
     public Genre(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -35,7 +22,6 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
-
 
     @Override
     public String toString() {
