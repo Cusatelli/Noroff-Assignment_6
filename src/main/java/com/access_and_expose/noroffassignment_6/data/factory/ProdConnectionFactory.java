@@ -10,7 +10,9 @@ import java.sql.SQLException;
 @Component
 @Profile("production")
 public class ProdConnectionFactory implements DatabaseConnectionFactory {
-    static final String URL = "jdbc:sqlite::resource:Northwind_small.sqlite";
+
+    static final String URL = "jdbc:sqlite::resource:Chinook.sqlite";
+
     @Override
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);
