@@ -23,7 +23,8 @@ public class AlbumService implements AlbumRepository {
 
     @Override
     public Collection<Album> getAll() {
-        return null;
+        String SQLQuery = "SELECT * FROM Album";
+        return getFromSQLDatabase(SQLQuery);
     }
 
     @Override
