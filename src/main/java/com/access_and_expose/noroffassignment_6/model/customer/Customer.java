@@ -10,6 +10,11 @@ public class Customer {
     private CustomerCountry customerCountry;
 
     public Customer() {}
+    public Customer(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     public Customer(Long id, String firstName, String lastName, int phone, String email, CustomerCountry customerCountry) {
         this.id = id;
         this.firstName = firstName;
@@ -58,13 +63,14 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone=" + phone +
-                ", email='" + email + '\'' +
-                ", customerCountry=" + customerCountry +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder("Customer{");
+        stringBuilder.append("id=").append(id);
+        if(firstName != null) stringBuilder.append(", firstName='").append(firstName).append("'");
+        if(lastName != null) stringBuilder.append(", lastName='").append(lastName).append("'");
+        if(phone > 0) stringBuilder.append(", phone='").append(phone).append("'");
+        if(email != null) stringBuilder.append(", email='").append(email).append("'");
+        if(customerCountry != null) stringBuilder.append(", customerCountry='").append(customerCountry).append("'");
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 }
