@@ -4,14 +4,12 @@ import com.access_and_expose.noroffassignment_6.data.repository.AlbumRepository;
 import com.access_and_expose.noroffassignment_6.data.repository.ArtistRepository;
 import com.access_and_expose.noroffassignment_6.data.repository.GenreRepository;
 import com.access_and_expose.noroffassignment_6.data.repository.TrackRepository;
-import com.access_and_expose.noroffassignment_6.model.Album;
-import com.access_and_expose.noroffassignment_6.model.Artist;
-import com.access_and_expose.noroffassignment_6.model.Genre;
-import com.access_and_expose.noroffassignment_6.model.Track;
+import com.access_and_expose.noroffassignment_6.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
@@ -51,8 +49,11 @@ public class HomeView {
     }
 
     @GetMapping("/search")
-    public String searchView(Track track, Model model, String keyword) {
-        if(keyword == null || keyword.equals(" ") || keyword.length() <= 0) { // Guard Clause
+    public String searchView(Track track, Model model, @RequestParam(required = true) String keyword) {
+        if(keyword == null || keyword.length() <= 1) { // Guard Clause
+            model.addAttribute("tracks", tracks);
+            model.addAttribute("artists", artists);
+            model.addAttribute("genres", genres); // Return existing
             return INDEX_HTML;
         }
 
