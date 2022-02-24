@@ -25,14 +25,14 @@ public class CustomerView {
     @GetMapping("/list")
     public String view(Model model) {
         model.addAttribute("customers", customerRepository.getAll());
-        return "listCustomer";
+        return "customerList";
     }
 
     @GetMapping("/add")
     public String addView(Model model) {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
-        return "addCustomer";
+        return "customerAdd";
     }
 
     @PostMapping("/add")
@@ -42,6 +42,6 @@ public class CustomerView {
         }
 
         customerRepository.add(customer);
-        return "addCustomer";
+        return "customerAdd";
     }
 }

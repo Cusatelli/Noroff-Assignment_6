@@ -4,70 +4,30 @@
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
-    <h1>Navigation</h1>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li>
-            Customer
-            <ul>
-                <li><a th:href="@{/customer/list}">List</a></li>
-                <li><a th:href="@{/customer/add}">Add</a></li>
-            </ul>
-        </li>
-        <li>
-            Album
-            <ul>
-                <li><a th:href="@{/album/list}">List</a></li>
-            </ul>
-        </li>
-        <li>
-            Artist
-            <ul>
-                <li><a th:href="@{/artist/list}">List</a></li>
-            </ul>
-        </li>
-        <li>
-            Genre
-            <ul>
-                <li><a th:href="@{/genre/list}">List</a></li>
-            </ul>
-        </li>
-        <li>
-            Invoice
-            <ul>
-                <li><a th:href="@{/invoice/list}">List</a></li>
-            </ul>
-        </li>
-        <li>
-            Track
-            <ul>
-                <li><a th:href="@{/track/list}">List</a></li>
-            </ul>
-        </li>
+<body>
+<div th:insert="navbar::navbar"></div>
+
+<div>
+    <h2>Search Bar</h2>
+    <form th:action="@{/search}" method="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Track name..." size="50">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div>
+    <h1>Artists</h1>
+    <ul th:each="artist: ${artists}">
+        <li th:text="${artist.getName()}"></li>
     </ul>
-
-    <div>
-        <h2>Search Bar</h2>
-        <form th:action="@{/search}" method="get">
-            <input type="text" name="keyword" th:value="${keyword}" placeholder="Track name..." size="50">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-
-    <div>
-        <h1>Artists</h1>
-        <ul th:each="artist: ${artists}">
-            <li th:text="${artist.getName()}"></li>
-        </ul>
-        <h1>Tracks</h1>
-        <ul th:each="track: ${tracks}">
-            <li th:text="${track.getName()}"></li>
-        </ul>
-        <h1>Genres</h1>
-        <ul th:each="genre: ${genres}">
-            <li th:text="${genre.getName()}"></li>
-        </ul>
-    </div>
+    <h1>Tracks</h1>
+    <ul th:each="track: ${tracks}">
+        <li th:text="${track.getName()}"></li>
+    </ul>
+    <h1>Genres</h1>
+    <ul th:each="genre: ${genres}">
+        <li th:text="${genre.getName()}"></li>
+    </ul>
 </div>
 
 </body>
