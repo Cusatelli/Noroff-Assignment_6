@@ -16,6 +16,11 @@ public class AlbumView {
         this.albumService = albumService;
     }
 
+    /**
+     * Get All Albums from Database and send them to Thymeleaf HTML.
+     * @param model model
+     * @return string-name of html file.
+     */
     @GetMapping("/list")
     public String view(Model model) {
         model.addAttribute("albums", albumService.getAll());

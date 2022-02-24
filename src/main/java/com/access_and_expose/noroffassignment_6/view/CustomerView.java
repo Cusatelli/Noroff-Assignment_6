@@ -22,12 +22,23 @@ public class CustomerView {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Get All Customer from Database and send them to Thymeleaf HTML.
+     * @param model model
+     * @return string-name of html file.
+     */
     @GetMapping("/list")
     public String view(Model model) {
         model.addAttribute("customers", customerRepository.getAll());
         return "customerList";
     }
 
+    /**
+     * Add New Customer from Database and send them to Thymeleaf HTML.
+     * redirect to add customer page.
+     * @param model model
+     * @return string-name of html file.
+     */
     @GetMapping("/add")
     public String addView(Model model) {
         Customer customer = new Customer();
@@ -35,6 +46,11 @@ public class CustomerView {
         return "customerAdd";
     }
 
+    /**
+     * Add New Customer from Database and send them to Thymeleaf HTML.
+     * @param model model
+     * @return string-name of html file.
+     */
     @PostMapping("/add")
     public String addForm(@ModelAttribute Customer customer, BindingResult errors, Model model) {
         if (errors.hasErrors()) {

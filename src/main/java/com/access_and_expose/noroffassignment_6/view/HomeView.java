@@ -35,7 +35,13 @@ public class HomeView {
         this.albumRepository = albumRepository;
     }
 
-    // 5 random artists, 5 random songs, and 5 random genres
+    //
+    /**
+     * Get 5 random artists, 5 random songs, and 5 random genres
+     * from Database and send them to Thymeleaf HTML.
+     * @param model model
+     * @return string-name of html file.
+     */
     @GetMapping("/")
     public String view(Model model) {
         resetAll(); // Reset lists if you want to refresh content.
@@ -49,6 +55,13 @@ public class HomeView {
         return INDEX_HTML;
     }
 
+    /**
+     * Search for a Track in database using SQL Queries on the input keyword value.
+     * @param track track found.
+     * @param model model.
+     * @param keyword input value.
+     * @return string-name of html file.
+     */
     @GetMapping("/search")
     public String searchView(Track track, Model model, @RequestParam(required = true) String keyword) {
         if(keyword == null || keyword.length() <= 1) { // Guard Clause
@@ -71,6 +84,11 @@ public class HomeView {
         return INDEX_HTML;
     }
 
+    /**
+     * Helper Method
+     * Get the search result from the different lists populated by the query.
+     * @param keyword keyword to search for.
+     */
     private void getSearch(String keyword) {
         tracks = trackRepository.getByKeyword(keyword);
 
@@ -81,6 +99,12 @@ public class HomeView {
             genres.add(genreRepository.getById(String.valueOf(tracks.get(0).getGenreId())));
         }
     }
+
+    /**
+     * Initialize random int between min and max range.
+     * @param min minimum value to start at.
+     * @param max maximum value to end at.
+     */
     private void initializeRandom(int min, int max) {
         int artistSize = artistRepository.getAll().size();
         int trackSize = trackRepository.getAll().size();
@@ -94,6 +118,9 @@ public class HomeView {
         }
     }
 
+    /**
+     * Clear all lists.
+     */
     private void resetAll() {
         tracks.clear();
         albums.clear();
