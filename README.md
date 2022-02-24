@@ -13,7 +13,7 @@
 # Table of Contents
 1. [About the Project](#about-the-project)
 2. [Install](#install)
-4. [Usage](#usage)
+3. [Usage](#usage)
 5. [Maintainers](#maintainers)
 6. [Contributing](#contributing)
 7. [Conventions](#conventions)
@@ -60,6 +60,25 @@ In addition to this, you should complete this assignment using Pair Programming.
 # Usage
 ```
 
+```
+
+# Build & Deploy
+Navigate to `cd Noroff-Assignment_6` & run the following commands to build & deploy the application:
+## Build
+```
+./gradlew build
+docker build --build-arg JAR_FILE=build/libs/\*.jar -t springio/gs-spring-boot-docker .
+```
+
+## Deploy
+```
+heroku login
+heroku container:login
+
+heroku create
+
+heroku container:push web
+heroku container:release web
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
