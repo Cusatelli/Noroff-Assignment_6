@@ -1,24 +1,26 @@
 <div id="top"></div>
 
 <div align="center">
-  <img src="#" alt="Logo" width="250" height="250">
+  <img src="/resources/Logo.png" alt="Logo" width="75%">
   <h3 align="center">Noroff Assignment 6</h3>
   <p align="center">
     Data access and display
     <br />
-    <a href="#">View Demo</a>
+    <a href="https://noroff-assignment-6.herokuapp.com/">View Demo</a>
   </p>
 </div>
 
 # Table of Contents
 1. [About the Project](#about-the-project)
 2. [Install](#install)
-4. [Usage](#usage)
-5. [Maintainers](#maintainers)
-6. [Contributing](#contributing)
-7. [Conventions](#conventions)
-8. [License](#license)
-9. [Contact](#contact)
+3. [Usage](#usage)
+4. [Build & Deploy](#build--deploy)
+5. [Demo](#demo)
+6. [Maintainers](#maintainers)
+7. [Contributing](#contributing)
+8. [Conventions](#conventions)
+9. [License](#license)
+10. [Contact](#contact)
 
 # About the project
 ## Data access with JDBC and Thymeleaf
@@ -52,10 +54,14 @@ In addition to this, you should complete this assignment using Pair Programming.
 
 <a href="resources/Assignment%202_Java_Data%20access%20and%20display.pdf">Assignment 2_Java_Data access and display.pdf</a>
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 # Install
 ```
 
 ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Usage
 ```
@@ -64,14 +70,40 @@ In addition to this, you should complete this assignment using Pair Programming.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-# Maintainers
-[@Cusatelli](https://github.com/Cusatelli)
+# Build & Deploy
+Navigate to `cd Noroff-Assignment_6` & run the following commands to build & deploy the application:
+## Build
+```
+./gradlew build
+docker build --build-arg JAR_FILE=build/libs/\*.jar -t springio/gs-spring-boot-docker .
+```
 
+## Deploy
+```
+heroku login
+heroku container:login
+
+heroku create
+
+heroku container:push web
+heroku container:release web
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+# Demo
+Heroku App: <a href="https://noroff-assignment-6.herokuapp.com">noroff-assignment-6.herokuapp.com</a>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+# Maintainers
+[@Cusatelli](https://github.com/Cusatelli)  
 [@Haruberi](https://github.com/Haruberi)
 
-# Contributing
-[@Cusatelli](https://github.com/Cusatelli)
+<p align="right">(<a href="#top">back to top</a>)</p>
 
+# Contributing
+[@Cusatelli](https://github.com/Cusatelli)  
 [@Haruberi](https://github.com/Haruberi)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -100,6 +132,7 @@ No active license.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Contact
-Email: <a href="mailto:github.cusatelli@gmail.com">github.cusatelli@gmail.com</a>
+Cusatelli: <a href="mailto:github.cusatelli@gmail.com">github.cusatelli@gmail.com</a>  
+Haruberi: <a href="https://github.com/Haruberi">github.com/Haruberi</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>

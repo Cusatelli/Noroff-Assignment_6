@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<div th:insert="navbar::navbar"></div>
+
+<div>
+    <h2>Search Bar</h2>
+    <form th:action="@{/search}" method="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Track name..." size="50">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div>
+    <h1>Artists</h1>
+    <ul th:each="artist: ${artists}">
+        <li th:text="${artist.getName()}"></li>
+    </ul>
+    <div th:if="${albums.size() > 0}">
+        <h1>Album</h1>
+        <ul th:each="album: ${albums}">
+            <li th:text="${album.getTitle()}"></li>
+        </ul>
+    </div>
+    <h1>Tracks</h1>
+    <ul th:each="track: ${tracks}">
+        <li th:text="${track.getName()}"></li>
+    </ul>
+    <h1>Genres</h1>
+    <ul th:each="genre: ${genres}">
+        <li th:text="${genre.getName()}"></li>
+    </ul>
+</div>
+
+</body>
+</html>

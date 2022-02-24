@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<div th:insert="navbar::navbar"></div>
+
+<div>
+    <h1>Customer List</h1>
+    <ul th:each="customer: ${customers}">
+        <li th:text="${customer.getFirstName()}"></li>
+        <li th:text="${customer.getLastName()}"></li>
+        <li th:text="${customer.getPhone()}"></li>
+        <li th:text="${customer.getEmail()}"></li>
+        <li th:text="${customer.getCustomerCountry().getCountryName()}"></li>
+        <li th:text="${customer.getCustomerCountry().getPostalCode()}"></li>
+    </ul>
+</div>
+</body>
+</html>
