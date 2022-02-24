@@ -1,6 +1,7 @@
-package com.access_and_expose.noroffassignment_6.data.repository.invoice;
+package com.access_and_expose.noroffassignment_6.data.service;
 
 import com.access_and_expose.noroffassignment_6.data.factory.DatabaseConnectionFactory;
+import com.access_and_expose.noroffassignment_6.data.repository.InvoiceRepository;
 import com.access_and_expose.noroffassignment_6.model.Invoice;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 
 @Service
-public class InvoiceRepository implements IInvoiceRepository {
+public class InvoiceService implements InvoiceRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
-    public InvoiceRepository(DatabaseConnectionFactory databaseConnectionFactory) {
+    public InvoiceService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
@@ -29,7 +29,8 @@ public class InvoiceRepository implements IInvoiceRepository {
 
     @Override
     public Collection<Invoice> getAll(int offset, int limit) {
-        return null;
+        String SQLQuery = "SELECT * FROM Invoice WHERE InvoiceId BETWEEN ? AND ?";
+        return getFromSQLDatabase(SQLQuery, String.valueOf(offset), String.valueOf(offset + limit));
     }
 
     @Override
@@ -58,32 +59,9 @@ public class InvoiceRepository implements IInvoiceRepository {
     }
 
     @Override
-    public LinkedHashMap<Long, Long> getByHighestSpender() {
-        String SQLQuery = "SELECT CustomerId, SUM(Total) FROM Invoice " +
-                "GROUP BY CustomerId " +
-                "ORDER BY SUM(Total) DESC"; // TODO: Make sure list is sorted...
-
-        LinkedHashMap<Long, Long> invoiceTotal = new LinkedHashMap<>();
-        try (Connection connection = databaseConnectionFactory.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Long customerId = resultSet.getLong("CustomerId");
-                int customerTotalSpent = resultSet.getInt("SUM(Total)");
-
-                // TODO: Check total sum. (0 is returned as 6 & result is 6 too high!).
-                //  Otherwise Query works fine.
-                invoiceTotal.put(customerId, (long) customerTotalSpent);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return invoiceTotal;
-    }
-
-    @Override
     public ArrayList<Invoice> getFromSQLDatabase(String SQLQuery, String... params) {
-        ArrayList<Invoice> invoices = new ArrayList<>();
+        ArrayList<Invoice> invoiceLines = new ArrayList<>();
+
         try (Connection connection = this.databaseConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
             for (int index = 1; index < params.length + 1; index++) {
@@ -92,17 +70,17 @@ public class InvoiceRepository implements IInvoiceRepository {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Invoice invoice = new Invoice(
+                Invoice invoiceLine = new Invoice(
                         resultSet.getLong("InvoiceId"),
                         resultSet.getLong("CustomerId"),
                         resultSet.getLong("Total")
                 );
 
-                invoices.add(invoice);
+                invoiceLines.add(invoiceLine);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return invoices;
+        return invoiceLines;
     }
 }
