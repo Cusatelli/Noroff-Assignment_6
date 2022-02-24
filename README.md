@@ -4,10 +4,9 @@
   <img src="/resources/Logo.png" alt="Logo" width="75%">
   <h3 align="center">Noroff Assignment 6</h3>
   <p align="center">
-    Data access and display<br />
-    Gentle Ravine
+    Data access and display
     <br />
-    <a href="https://gentle-ravine-82898.herokuapp.com">View Demo</a>
+    <a href="https://noroff-assignment-6.herokuapp.com/">View Demo</a>
   </p>
 </div>
 
@@ -55,15 +54,21 @@ In addition to this, you should complete this assignment using Pair Programming.
 
 <a href="resources/Assignment%202_Java_Data%20access%20and%20display.pdf">Assignment 2_Java_Data access and display.pdf</a>
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 # Install
 ```
 
 ```
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 # Usage
 ```
 
 ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Build & Deploy
 Navigate to `cd Noroff-Assignment_6` & run the following commands to build & deploy the application:
@@ -84,19 +89,21 @@ heroku container:push web
 heroku container:release web
 ```
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 # Demo
-Heroku App: <a href="https://gentle-ravine-82898.herokuapp.com">https://gentle-ravine-82898.herokuapp.com</a>
+Heroku App: <a href="https://noroff-assignment-6.herokuapp.com">noroff-assignment-6.herokuapp.com</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Maintainers
-[@Cusatelli](https://github.com/Cusatelli)
-
+[@Cusatelli](https://github.com/Cusatelli)  
 [@Haruberi](https://github.com/Haruberi)
 
-# Contributing
-[@Cusatelli](https://github.com/Cusatelli)
+<p align="right">(<a href="#top">back to top</a>)</p>
 
+# Contributing
+[@Cusatelli](https://github.com/Cusatelli)  
 [@Haruberi](https://github.com/Haruberi)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -125,6 +132,7 @@ No active license.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Contact
-Email: <a href="mailto:github.cusatelli@gmail.com">github.cusatelli@gmail.com</a>
+Cusatelli: <a href="mailto:github.cusatelli@gmail.com">github.cusatelli@gmail.com</a>  
+Haruberi: <a href="https://github.com/Haruberi">github.com/Haruberi</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
