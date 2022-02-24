@@ -73,7 +73,20 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/favorite/genre/id={customerId}")
-    public LinkedHashMap<Genre, Integer> getCustomerFavoriteGenre(@PathVariable String customerId, Order order) {
-        return this.customerService.getFavoriteGenre(customerId, order);
+    public LinkedHashMap<Genre, Integer> getCustomerFavoriteGenre(@PathVariable String customerId, @RequestParam(required = false, defaultValue = "DESCENDING") Order order) {
+        LinkedHashMap<Genre, Integer> map = this.customerService.getFavoriteGenre(customerId, order);
+        LinkedHashMap<Genre, Integer> newMap = new LinkedHashMap<>();
+
+        Object[] array = map.values().toArray();
+
+        if(!Objects.equals(array[0], array[1])) {
+            for (Genre genre : map.keySet()) {
+                newMap.put(genre, map.get(genre));
+                break; // Exit immediately after assigning ONE (1) value.
+            }
+            return newMap;
+        }
+
+        return map;
     }
 }
