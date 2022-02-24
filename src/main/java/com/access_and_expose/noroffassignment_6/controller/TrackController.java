@@ -1,6 +1,6 @@
 package com.access_and_expose.noroffassignment_6.controller;
 
-import com.access_and_expose.noroffassignment_6.data.repository.track.ITrackRepository;
+import com.access_and_expose.noroffassignment_6.data.service.TrackService;
 import com.access_and_expose.noroffassignment_6.model.Track;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,24 +15,24 @@ import java.util.Collection;
 @RequestMapping(value = "api/v1/track", method = RequestMethod.GET)
 public class TrackController {
 
-    private final ITrackRepository trackRepository;
+    private final TrackService trackService;
 
-    public TrackController(ITrackRepository trackRepository) {
-        this.trackRepository = trackRepository;
+    public TrackController(TrackService trackService) {
+        this.trackService = trackService;
     }
 
     @GetMapping(value = "/")
     public Collection<Track> getAllTracks() {
-        return this.trackRepository.getAll();
+        return this.trackService.getAll();
     }
 
     @GetMapping(value = "/id={trackId}")
     public Track getTrackById(String trackId) {
-        return this.trackRepository.getById(trackId);
+        return this.trackService.getById(trackId);
     }
 
     @GetMapping(value = "/name={trackName}")
     public Collection<Track> getTrackByName(String trackName) {
-        return this.trackRepository.getByName(trackName);
+        return this.trackService.getByName(trackName);
     }
 }

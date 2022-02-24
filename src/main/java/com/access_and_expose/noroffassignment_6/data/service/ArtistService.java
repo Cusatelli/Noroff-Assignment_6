@@ -1,19 +1,23 @@
-package com.access_and_expose.noroffassignment_6.data.repository.artist;
+package com.access_and_expose.noroffassignment_6.data.service;
 
 import com.access_and_expose.noroffassignment_6.data.factory.DatabaseConnectionFactory;
+import com.access_and_expose.noroffassignment_6.data.repository.ArtistRepository;
 import com.access_and_expose.noroffassignment_6.model.Artist;
-
 import org.springframework.stereotype.Service;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class ArtistRepository implements IArtistRepository {
+public class ArtistService implements ArtistRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
-    public ArtistRepository(DatabaseConnectionFactory databaseConnectionFactory) {
+    public ArtistService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 

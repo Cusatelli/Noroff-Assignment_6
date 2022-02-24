@@ -1,10 +1,11 @@
-package com.access_and_expose.noroffassignment_6.data.repository.customer;
+package com.access_and_expose.noroffassignment_6.data.service;
 
 import com.access_and_expose.noroffassignment_6.data.factory.DatabaseConnectionFactory;
-import com.access_and_expose.noroffassignment_6.model.*;
+import com.access_and_expose.noroffassignment_6.data.repository.CustomerRepository;
+import com.access_and_expose.noroffassignment_6.model.Genre;
+import com.access_and_expose.noroffassignment_6.model.Order;
 import com.access_and_expose.noroffassignment_6.model.customer.Customer;
 import com.access_and_expose.noroffassignment_6.model.customer.CustomerCountry;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,11 +15,11 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 
 @Service
-public class CustomerRepository implements ICustomerRepository {
+public class CustomerService implements CustomerRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
-    public CustomerRepository(DatabaseConnectionFactory databaseConnectionFactory) {
+    public CustomerService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
@@ -145,7 +146,11 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public LinkedHashMap<Genre, Integer> getFavoriteGenre(String customerId) {
+    public LinkedHashMap<Genre, Integer> getFavoriteGenre(String customerId, Order order) {
+        String ORDER = "";
+        if(order.equals(Order.ASCENDING)) { ORDER = "ASC"; }
+        if(order.equals(Order.DESCENDING)) { ORDER = "DESC"; }
+
         String SQLQuery = "SELECT InvoiceLine.InvoiceId, InvoiceLine.TrackId, Invoice.CustomerId, Track.GenreId, Genre.Name, COUNT(Genre.GenreId) " +
                 "FROM InvoiceLine " +
                 "INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId " +
@@ -154,9 +159,9 @@ public class CustomerRepository implements ICustomerRepository {
                 "INNER JOIN Genre ON Track.GenreId = Genre.GenreId " +
                 "WHERE Customer.CustomerId = ? " +
                 "GROUP BY Genre.GenreId " +
-                "ORDER BY COUNT(Track.GenreId) DESC";
+                "ORDER BY COUNT(Track.GenreId) " + ORDER + " LIMIT 2";
 
-        LinkedHashMap<Genre, Integer> favorites = new LinkedHashMap<>();
+                LinkedHashMap<Genre, Integer> favorites = new LinkedHashMap<>();
         try (Connection connection = databaseConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
             preparedStatement.setString(1, customerId);
@@ -173,6 +178,7 @@ public class CustomerRepository implements ICustomerRepository {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return favorites;
     }
 

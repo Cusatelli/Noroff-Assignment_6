@@ -1,19 +1,23 @@
-package com.access_and_expose.noroffassignment_6.data.repository.genre;
+package com.access_and_expose.noroffassignment_6.data.service;
 
 import com.access_and_expose.noroffassignment_6.data.factory.DatabaseConnectionFactory;
+import com.access_and_expose.noroffassignment_6.data.repository.GenreRepository;
 import com.access_and_expose.noroffassignment_6.model.Genre;
 import org.springframework.stereotype.Service;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class GenreRepository implements IGenreRepository {
+public class GenreService implements GenreRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
-    public GenreRepository(DatabaseConnectionFactory databaseConnectionFactory) {
+    public GenreService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 

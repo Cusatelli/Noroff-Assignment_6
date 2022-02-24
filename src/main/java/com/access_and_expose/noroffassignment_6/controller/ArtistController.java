@@ -1,6 +1,6 @@
 package com.access_and_expose.noroffassignment_6.controller;
 
-import com.access_and_expose.noroffassignment_6.data.repository.artist.IArtistRepository;
+import com.access_and_expose.noroffassignment_6.data.service.ArtistService;
 import com.access_and_expose.noroffassignment_6.model.Artist;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,19 +16,19 @@ import java.util.Collection;
 @RequestMapping("api/v1")
 public class ArtistController {
 
-    private final IArtistRepository artistRepository;
+    private final ArtistService artistService;
 
-    public ArtistController(IArtistRepository artistRepository) {
-        this.artistRepository = artistRepository;
+    public ArtistController(ArtistService artistService) {
+        this.artistService = artistService;
     }
 
     @GetMapping("/artist/id={artistId}")
     public Artist getArtistById(@PathVariable String artistId) {
-        return this.artistRepository.getById(artistId);
+        return this.artistService.getById(artistId);
     }
 
     @GetMapping("/artist/name={artistName}")
     public Collection<Artist> getArtistByName(@PathVariable String artistName) {
-        return this.artistRepository.getByName(artistName);
+        return this.artistService.getByName(artistName);
     }
 }

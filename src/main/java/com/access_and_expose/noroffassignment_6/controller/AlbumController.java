@@ -1,6 +1,6 @@
 package com.access_and_expose.noroffassignment_6.controller;
 
-import com.access_and_expose.noroffassignment_6.data.repository.album.IAlbumRepository;
+import com.access_and_expose.noroffassignment_6.data.service.AlbumService;
 import com.access_and_expose.noroffassignment_6.model.Album;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,19 +16,19 @@ import java.util.Collection;
 @RequestMapping(value="api/v1")
 public class AlbumController {
 
-    private final IAlbumRepository albumRepository;
+    private final AlbumService albumService;
 
-    public AlbumController(IAlbumRepository albumRepository) {
-        this.albumRepository = albumRepository;
+    public AlbumController(AlbumService albumService) {
+        this.albumService = albumService;
     }
 
     @GetMapping(value = "/album/id={albumId}")
     public Album getAlbumById(@PathVariable String albumId) {
-        return this.albumRepository.getById(albumId);
+        return this.albumService.getById(albumId);
     }
 
     @GetMapping(value="/album/albumName={albumName}")
     public Collection<Album> getAlbumByName(@PathVariable String albumName) {
-        return this.albumRepository.getByName(albumName);
+        return this.albumService.getByName(albumName);
     }
 }
