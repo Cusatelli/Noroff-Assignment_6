@@ -6,7 +6,7 @@
   <p align="center">
     Data access and display
     <br />
-    <a href="https://noroff-assignment-6.herokuapp.com/">View Demo</a>
+    <a href="https://whispering-meadow-32702.herokuapp.com/">View Demo</a>
   </p>
 </div>
 
@@ -16,11 +16,12 @@
 3. [Usage](#usage)
 4. [Build & Deploy](#build--deploy)
 5. [Demo](#demo)
-6. [Maintainers](#maintainers)
-7. [Contributing](#contributing)
-8. [Conventions](#conventions)
-9. [License](#license)
-10. [Contact](#contact)
+6. [Swagger](#swagger)
+7. [Maintainers](#maintainers)
+8. [Contributing](#contributing)
+9. [Conventions](#conventions)
+10. [License](#license)
+11. [Contact](#contact)
 
 # About the project
 ## Data access with JDBC and Thymeleaf
@@ -58,14 +59,16 @@ In addition to this, you should complete this assignment using Pair Programming.
 
 # Install
 ```
-
+git clone https://github.com/Cusatelli/Noroff-Assignment_6.git
+cd Noroff-Assignment_6
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Usage
 ```
-
+Open IntelliJ IDEA navigate to /src/main/java/com/access_and_expose/noroffassignment_6/Main.java
+Rigth click & press 'Run Noroff-Assignment_6Application.java'
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -92,7 +95,12 @@ heroku container:release web
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Demo
-Heroku App: <a href="https://noroff-assignment-6.herokuapp.com">noroff-assignment-6.herokuapp.com</a>
+Heroku App: <a href="https://whispering-meadow-32702.herokuapp.com/">https://whispering-meadow-32702.herokuapp.com/</a>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+# Swagger
+Swagger: <a href="https://whispering-meadow-32702.herokuapp.com/swagger-ui/index.html">https://whispering-meadow-32702.herokuapp.com/swagger-ui/index.html</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
