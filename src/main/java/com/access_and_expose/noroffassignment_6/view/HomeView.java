@@ -62,12 +62,15 @@ public class HomeView {
             ArrayList<Album> albums = new ArrayList<>();
             ArrayList<Artist> artists = new ArrayList<>();
             ArrayList<Genre> genres = new ArrayList<>();
+
             for (int i = 0; i < tracks.size(); i++) {
                 albums.add(albumRepository.getById(String.valueOf(tracks.get(0).getAlbumId())));
                 Album album = albumRepository.getById(String.valueOf(tracks.get(0).getAlbumId()));
                 artists.add(artistRepository.getById(String.valueOf(album.getArtistId())));
                 genres.add(genreRepository.getById(String.valueOf(tracks.get(0).getGenreId())));
             }
+
+            model.addAttribute("keyword", keyword);
             model.addAttribute("tracks", tracks);
             model.addAttribute("artists", artists);
             model.addAttribute("genres", genres);
