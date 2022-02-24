@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Genre</title>
+</head>
+<body>
+    <h1>Genre List</h1>
+<ul th:each="genre: ${genres}">
+    <li th:text="${genre.getName()}"></li>
+</ul>
+
+</body>
+</html>
