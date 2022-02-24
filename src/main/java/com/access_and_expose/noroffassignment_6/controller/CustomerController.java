@@ -1,5 +1,7 @@
 package com.access_and_expose.noroffassignment_6.controller;
 
+import com.access_and_expose.noroffassignment_6.model.Genre;
+import com.access_and_expose.noroffassignment_6.model.Order;
 import com.access_and_expose.noroffassignment_6.model.customer.Customer;
 import com.access_and_expose.noroffassignment_6.data.repository.customer.ICustomerRepository;
 
@@ -59,13 +61,18 @@ public class CustomerController {
         return this.customerRepository.deleteById(customerId);
     }
 
-    @GetMapping(value = "/sortByCountry")
-    public LinkedHashMap<String, Integer> getCustomerOrderedByCountry() {
-        return this.customerRepository.sortByCountry();
+    @GetMapping(value = "/sort/country")
+    public LinkedHashMap<String, Integer> getCustomerByCountry(@RequestParam(required = false, defaultValue = "DESCENDING") Order order) {
+        return this.customerRepository.sortByCountry(order);
     }
 
-    @GetMapping(value = "/sortByHighestSpender")
-    public LinkedHashMap<Customer, Integer> getCustomerByHighestSpender() {
-        return this.customerRepository.getCustomerHighestSpender();
+    @GetMapping(value = "/sort/spender")
+    public LinkedHashMap<Customer, Integer> getCustomerBySpender(@RequestParam(required = false, defaultValue = "DESCENDING") Order order) {
+        return this.customerRepository.getSpender(order);
+    }
+
+    @GetMapping(value = "/favorite/genre/id={customerId}")
+    public LinkedHashMap<Genre, Integer> getCustomerFavoriteGenre(@PathVariable String customerId) {
+        return this.customerRepository.getFavoriteGenre(customerId);
     }
 }
