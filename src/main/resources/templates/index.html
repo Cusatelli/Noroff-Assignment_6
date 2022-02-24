@@ -50,9 +50,10 @@
 
     <div>
         <h2>Search Bar</h2>
-        <form th:action="@{/search}" method="get"/>
-        <input type="text" name="keyword" th:value="${keyword}" placeholder="Track name..." size="50">
-        <button type="submit">Search</button>
+        <form th:action="@{/search}" method="get">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Track name..." size="50">
+            <button type="submit">Search</button>
+        </form>
     </div>
 
     <div>
