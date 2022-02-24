@@ -17,31 +17,49 @@ public class GenreService implements GenreRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
+    /**
+     * Genre Service Constructor
+     * @param databaseConnectionFactory database connection URL.
+     */
     public GenreService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
+    /**
+     * Get All Genre from Database using "SELECT * FROM Genre" Query.
+     * @return Collection of Genre Model Objects.
+     */
     @Override
     public Collection<Genre> getAll() {
         String SQLQuery = "SELECT * FROM Genre";
         return getFromSQLDatabase(SQLQuery);
     }
 
-    @Override
-    public Collection<Genre> getAll(int offset, int limit) {
-        return null;
-    }
-
+    /**
+     * Get Genre by id using SQL Queries from SQL Database Chinook.
+     * @param genreId id to search for in Database.
+     * @return Genre model object.
+     */
     @Override
     public Genre getById(String genreId) {
         String SQLQuery = "SELECT * FROM Genre WHERE GenreId LIKE ?";
         return getFromSQLDatabase(SQLQuery, genreId).get(0);
     }
 
+    /**
+     * Get Genre by name using SQL Queries from SQL Database Chinook.
+     * @param genreName name to search for in Database.
+     * @return Genre model object.
+     */
     @Override
     public Collection<Genre> getByName(String genreName) {
         String SQLQuery = "SELECT * FROM Genre WHERE Name LIKE ?";
         return getFromSQLDatabase(SQLQuery, genreName);
+    }
+
+    @Override
+    public Collection<Genre> getAll(int offset, int limit) {
+        return null;
     }
 
     @Override
@@ -59,6 +77,12 @@ public class GenreService implements GenreRepository {
         return false;
     }
 
+    /**
+     * Helper method to Get Data from SQL Database.
+     * @param SQLQuery search query.
+     * @param params preparedStatement input.
+     * @return ArrayList of Model Objects.
+     */
     @Override
     public ArrayList<Genre> getFromSQLDatabase(String SQLQuery, String... params) {
         ArrayList<Genre> genres = new ArrayList<>();

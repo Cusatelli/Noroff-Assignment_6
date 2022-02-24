@@ -19,34 +19,63 @@ public class CustomerService implements CustomerRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
+    /**
+     * Customer Service Constructor
+     * @param databaseConnectionFactory database connection URL.
+     */
     public CustomerService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
+    /**
+     * Get All Customer from Database using "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer" Query.
+     * @return Collection of Customer Model Objects.
+     */
     @Override
     public Collection<Customer> getAll() {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
         return getFromSQLDatabase(SQLQuery);
     }
 
+    /**
+     * Get All Customer from Database using "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId BETWEEN ? AND ?" Query.
+     * @param offset start getting all elements from offset value - default to 0
+     * @param limit end getting all elements at offset + limit.
+     * @return Collection of Customer model objects.
+     */
     @Override
     public Collection<Customer> getAll(@PathVariable int offset, @PathVariable int limit) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId BETWEEN ? AND ?";
         return getFromSQLDatabase(SQLQuery, String.valueOf(offset), String.valueOf(offset + limit));
     }
 
+    /**
+     * Get Customer by id using SQL Queries from SQL Database Chinook.
+     * @param customerId id to search for in Database.
+     * @return Customer model object.
+     */
     @Override
     public Customer getById(@PathVariable String customerId) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId = ?";
         return getFromSQLDatabase(SQLQuery, customerId).get(0);
     }
 
+    /**
+     * Get Customer by name using SQL Queries from SQL Database Chinook.
+     * @param firstName name to search for in Database.
+     * @return Customer model object.
+     */
     @Override
     public Collection<Customer> getByName(@PathVariable String firstName) {
         String SQLQuery = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE ?";
         return getFromSQLDatabase(SQLQuery, firstName);
     }
 
+    /**
+     * Add new Customer to SQL Database Chinook using SQL Queries.
+     * @param customer Customer model Object.
+     * @return the Customer Model Object inserted.
+     */
     @Override
     public Customer add(@PathVariable Customer customer) {
         String SQLQuery = "INSERT INTO Customer(FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (?, ?, ?, ?, ?, ?)";
@@ -78,6 +107,11 @@ public class CustomerService implements CustomerRepository {
         }
     }
 
+    /**
+     * Update existing Customer to SQL Database Chinook using SQL Queries.
+     * @param item Customer model Object.
+     * @return true if update successful.
+     */
     @Override
     public boolean update(Customer item) {
         String SQLQuery = "UPDATE Customer SET FirstName = ?, LastName = ?, Phone = ?, Email = ?, Country = ?, PostalCode = ? WHERE CustomerId = ?";
@@ -100,6 +134,11 @@ public class CustomerService implements CustomerRepository {
         return false;
     }
 
+    /**
+     * Delete Customer in SQL Database Chinook using SQL Queries.
+     * @param id id to delete.
+     * @return true if delete successful.
+     */
     @Override
     public boolean deleteById(String id) {
         String SQLQuery = "DELETE FROM Customer WHERE CustomerID = ?";
@@ -116,6 +155,12 @@ public class CustomerService implements CustomerRepository {
         }
     }
 
+
+    /**
+     * Get Customer & Sort by Country from SQL Database using SQL Queries.
+     * @param order Ascending or Descending order.
+     * @return LinkedHashMap<String, Integer> ordered by insertion.
+     */
     @Override
     public LinkedHashMap<Customer, Integer> getSpender(Order order) {
         String ORDER = "";
@@ -145,6 +190,12 @@ public class CustomerService implements CustomerRepository {
         return customers;
     }
 
+    /**
+     * Get Customer Favorite Genre base on their invoice history from SQL Database using SQL Queries.
+     * @param customerId Customer id.
+     * @param order Ascending or Descending order.
+     * @return LinkedHashMap<Genre, Integer> ordered by insertion.
+     */
     @Override
     public LinkedHashMap<Genre, Integer> getFavoriteGenre(String customerId, Order order) {
         String ORDER = "";
@@ -182,6 +233,11 @@ public class CustomerService implements CustomerRepository {
         return favorites;
     }
 
+    /**
+     * Get Customer & Sort by Country from SQL Database using SQL Queries.
+     * @param order Ascending or Descending order.
+     * @return LinkedHashMap<String, Integer> ordered by insertion.
+     */
     @Override
     public LinkedHashMap<String, Integer> sortByCountry(Order order) {
         String ORDER = "";
@@ -209,10 +265,10 @@ public class CustomerService implements CustomerRepository {
     }
 
     /**
-     * Helper Method
-     * @param SQLQuery
-     * @param params
-     * @return
+     * Helper method to Get Data from SQL Database.
+     * @param SQLQuery search query.
+     * @param params preparedStatement input.
+     * @return ArrayList of Model Objects.
      */
     @Override
     public ArrayList<Customer> getFromSQLDatabase(String SQLQuery, String... params) {

@@ -18,34 +18,63 @@ public class TrackService implements TrackRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
+    /**
+     * Track Service Constructor
+     * @param databaseConnectionFactory database connection URL.
+     */
     public TrackService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
+    /**
+     * Get All Track from Database using "SELECT * FROM Track" Query.
+     * @return Collection of Track Model Objects.
+     */
     @Override
     public Collection<Track> getAll() {
         String SQLQuery = "SELECT * FROM Track";
         return getFromSQLDatabase(SQLQuery);
     }
 
+    /**
+     * Get All Track from Database using "SELECT * FROM Track WHERE TrackId BETWEEN ? AND ?" Query.
+     * @param offset start getting all elements from offset value - default to 0
+     * @param limit end getting all elements at offset + limit.
+     * @return Collection of Track model objects.
+     */
     @Override
     public Collection<Track> getAll(@PathVariable int offset, @PathVariable int limit) {
         String SQLQuery = "SELECT * FROM Track WHERE TrackId BETWEEN ? AND ?";
         return getFromSQLDatabase(SQLQuery, String.valueOf(offset), String.valueOf(offset + limit));
     }
 
+    /**
+     * Get Track by id using SQL Queries from SQL Database Chinook.
+     * @param trackId id to search for in Database.
+     * @return Track model object.
+     */
     @Override
     public Track getById(String trackId) {
         String SQLQuery = "SELECT TrackId, Name, AlbumId, GenreId, UnitPrice FROM Track WHERE TrackId LIKE ?";
         return getFromSQLDatabase(SQLQuery, trackId).get(0);
     }
 
+    /**
+     * Get Track by name using SQL Queries from SQL Database Chinook.
+     * @param trackName name to search for in Database.
+     * @return Track model object.
+     */
     @Override
     public Collection<Track> getByName(String trackName) {
         String SQLQuery = "SELECT TrackId, Name, AlbumId, GenreId, UnitPrice FROM Track WHERE Name LIKE ?";
         return getFromSQLDatabase(SQLQuery, trackName);
     }
 
+    /**
+     * Get Track by keyword using SQL Queries from SQL Database Chinook.
+     * @param keyword keyword to search for in Database.
+     * @return Track model object.
+     */
     @Override
     public ArrayList<Track> getByKeyword(String keyword) {
         String SQLQuery = "SELECT TrackId, Name, AlbumId, GenreId, UnitPrice FROM Track WHERE Name LIKE ?";
@@ -67,6 +96,12 @@ public class TrackService implements TrackRepository {
         return false;
     }
 
+    /**
+     * Helper method to Get Data from SQL Database.
+     * @param SQLQuery search query.
+     * @param params preparedStatement input.
+     * @return ArrayList of Model Objects.
+     */
     @Override
     public ArrayList<Track> getFromSQLDatabase(String SQLQuery, String... params) {
         ArrayList<Track> tracks = new ArrayList<>();

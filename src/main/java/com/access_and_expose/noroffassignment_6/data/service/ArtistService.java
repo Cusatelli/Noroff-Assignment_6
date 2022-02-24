@@ -17,31 +17,49 @@ public class ArtistService implements ArtistRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
+    /**
+     * Artist Service Constructor
+     * @param databaseConnectionFactory database connection URL.
+     */
     public ArtistService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
+    /**
+     * Get All Artist from Database using "SELECT * FROM Artist" Query.
+     * @return Collection of Artist Model Objects.
+     */
     @Override
     public Collection<Artist> getAll() {
         String SQLQuery = "SELECT * FROM Artist";
         return getFromSQLDatabase(SQLQuery);
     }
 
-    @Override
-    public Collection<Artist> getAll(int offset, int limit) {
-        return null;
-    }
-
+    /**
+     * Get Artist by id using SQL Queries from SQL Database Chinook.
+     * @param artistId id to search for in Database.
+     * @return Artist model object.
+     */
     @Override
     public Artist getById(String artistId) {
         String SQLQuery = "SELECT * FROM Artist WHERE ArtistId = ?";
         return getFromSQLDatabase(SQLQuery, artistId).get(0);
     }
 
+    /**
+     * Get Artist by name using SQL Queries from SQL Database Chinook.
+     * @param artistName name to search for in Database.
+     * @return Artist model object.
+     */
     @Override
     public Collection<Artist> getByName(String artistName) {
         String SQLQuery = "SELECT * FROM Artist WHERE Name LIKE ?";
         return getFromSQLDatabase(SQLQuery, artistName);
+    }
+
+    @Override
+    public Collection<Artist> getAll(int offset, int limit) {
+        return null;
     }
 
     @Override
@@ -59,6 +77,12 @@ public class ArtistService implements ArtistRepository {
         return false;
     }
 
+    /**
+     * Helper method to Get Data from SQL Database.
+     * @param SQLQuery search query.
+     * @param params preparedStatement input.
+     * @return ArrayList of Model Objects.
+     */
     @Override
     public ArrayList<Artist> getFromSQLDatabase(String SQLQuery, String... params) {
         ArrayList<Artist> artists = new ArrayList<>();

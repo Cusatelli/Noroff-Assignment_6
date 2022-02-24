@@ -13,6 +13,11 @@ public class ProdConnectionFactory implements DatabaseConnectionFactory {
 
     static final String URL = "jdbc:sqlite::resource:Chinook.sqlite";
 
+    /**
+     * Get the Connection String URL used to connect to Database.
+     * @return database URL.
+     * @throws SQLException error.
+     */
     @Override
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);

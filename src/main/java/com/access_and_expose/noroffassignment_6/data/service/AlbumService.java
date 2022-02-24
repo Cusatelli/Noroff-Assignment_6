@@ -17,31 +17,49 @@ public class AlbumService implements AlbumRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
+    /**
+     * Album Service Constructor
+     * @param databaseConnectionFactory database connection URL.
+     */
     public AlbumService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
+    /**
+     * Get All Albums from Database using "SELECT * FROM Album" Query.
+     * @return Collection of Album Model Objects.
+     */
     @Override
     public Collection<Album> getAll() {
         String SQLQuery = "SELECT * FROM Album";
         return getFromSQLDatabase(SQLQuery);
     }
 
-    @Override
-    public Collection<Album> getAll(int offset, int limit) {
-        return null;
-    }
-
+    /**
+     * Get Album by id using SQL Queries from SQL Database Chinook.
+     * @param albumId id to search for in Database.
+     * @return Album model object.
+     */
     @Override
     public Album getById(String albumId) {
         String SQLQuery = "SELECT * FROM Album WHERE AlbumId = ?";
         return getFromSQLDatabase(SQLQuery, albumId).get(0);
     }
 
+    /**
+     * Get Album by name using SQL Queries from SQL Database Chinook.
+     * @param albumName name to search for in Database.
+     * @return Album model object.
+     */
     @Override
     public Collection<Album> getByName(String albumName) {
         String SQLQuery = "SELECT * FROM Album WHERE Title LIKE ?";
         return getFromSQLDatabase(SQLQuery, albumName);
+    }
+
+    @Override
+    public Collection<Album> getAll(int offset, int limit) {
+        return null;
     }
 
     @Override
@@ -59,6 +77,12 @@ public class AlbumService implements AlbumRepository {
         return false;
     }
 
+    /**
+     * Helper method to Get Data from SQL Database.
+     * @param SQLQuery search query.
+     * @param params preparedStatement input.
+     * @return ArrayList of Model Objects.
+     */
     @Override
     public ArrayList<Album> getFromSQLDatabase(String SQLQuery, String... params) {
         ArrayList<Album> albums = new ArrayList<>();

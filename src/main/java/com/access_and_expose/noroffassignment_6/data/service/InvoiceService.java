@@ -17,16 +17,30 @@ public class InvoiceService implements InvoiceRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
+    /**
+     * Invoice Service Constructor
+     * @param databaseConnectionFactory database connection URL.
+     */
     public InvoiceService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
+    /**
+     * Get All Invoice from Database using "SELECT * FROM Invoice" Query.
+     * @return Collection of Invoice Model Objects.
+     */
     @Override
     public Collection<Invoice> getAll() {
         String SQLQuery = "SELECT * FROM Invoice";
         return getFromSQLDatabase(SQLQuery);
     }
 
+    /**
+     * Get All Invoice from Database using "SELECT * FROM Invoice WHERE InvoiceId BETWEEN ? AND ?" Query.
+     * @param offset start getting all elements from offset value - default to 0
+     * @param limit end getting all elements at offset + limit.
+     * @return Collection of Invoice model objects.
+     */
     @Override
     public Collection<Invoice> getAll(int offset, int limit) {
         String SQLQuery = "SELECT * FROM Invoice WHERE InvoiceId BETWEEN ? AND ?";
@@ -58,6 +72,12 @@ public class InvoiceService implements InvoiceRepository {
         return false;
     }
 
+    /**
+     * Helper method to Get Data from SQL Database.
+     * @param SQLQuery search query.
+     * @param params preparedStatement input.
+     * @return ArrayList of Model Objects.
+     */
     @Override
     public ArrayList<Invoice> getFromSQLDatabase(String SQLQuery, String... params) {
         ArrayList<Invoice> invoiceLines = new ArrayList<>();

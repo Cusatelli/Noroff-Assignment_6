@@ -3,6 +3,7 @@ package com.access_and_expose.noroffassignment_6.data.service;
 import com.access_and_expose.noroffassignment_6.data.factory.DatabaseConnectionFactory;
 import com.access_and_expose.noroffassignment_6.data.repository.InvoiceLineRepository;
 import com.access_and_expose.noroffassignment_6.model.InvoiceLine;
+import com.access_and_expose.noroffassignment_6.model.Track;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -17,22 +18,41 @@ public class InvoiceLineService implements InvoiceLineRepository {
 
     private final DatabaseConnectionFactory databaseConnectionFactory;
 
+    /**
+     * InvoiceLine Service Constructor
+     * @param databaseConnectionFactory database connection URL.
+     */
     public InvoiceLineService(DatabaseConnectionFactory databaseConnectionFactory) {
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
+    /**
+     * Get All InvoiceLine from Database using "SELECT * FROM InvoiceLine" Query.
+     * @return Collection of InvoiceLine Model Objects.
+     */
     @Override
     public Collection<InvoiceLine> getAll() {
         String SQLQuery = "SELECT * FROM InvoiceLine";
         return getFromSQLDatabase(SQLQuery);
     }
 
+    /**
+     * Get All Track from Database using "SELECT * FROM InvoiceLine WHERE InvoiceLineId BETWEEN ? AND ?" Query.
+     * @param offset start getting all elements from offset value - default to 0
+     * @param limit end getting all elements at offset + limit.
+     * @return Collection of Track model objects.
+     */
     @Override
     public Collection<InvoiceLine> getAll(int offset, int limit) {
         String SQLQuery = "SELECT * FROM InvoiceLine WHERE InvoiceLineId BETWEEN ? AND ?";
         return getFromSQLDatabase(SQLQuery, String.valueOf(offset), String.valueOf(offset + limit));
     }
 
+    /**
+     * Get InvoiceLine by id using SQL Queries from SQL Database Chinook.
+     * @param id id to search for in Database.
+     * @return InvoiceLine model object.
+     */
     @Override
     public InvoiceLine getById(String id) {
         String SQLQuery = "SELECT * FROM InvoiceLine WHERE InvoiceLineId = ?";
@@ -59,6 +79,12 @@ public class InvoiceLineService implements InvoiceLineRepository {
         return false;
     }
 
+    /**
+     * Helper method to Get Data from SQL Database.
+     * @param SQLQuery search query.
+     * @param params preparedStatement input.
+     * @return ArrayList of Model Objects.
+     */
     @Override
     public ArrayList<InvoiceLine> getFromSQLDatabase(String SQLQuery, String... params) {
         ArrayList<InvoiceLine> invoices = new ArrayList<>();
