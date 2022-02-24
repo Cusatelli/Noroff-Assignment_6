@@ -4,46 +4,44 @@
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
-<body>
-<div>
     <h1>Navigation</h1>
     <ul>
         <li><a href="/">Home</a></li>
         <li>
             Customer
             <ul>
-                <li><a href="/customer/list">List</a></li>
-                <li><a href="/customer/add">Add</a></li>
+                <li><a th:href="@{/customer/list}">List</a></li>
+                <li><a th:href="@{/customer/add}">Add</a></li>
             </ul>
         </li>
         <li>
             Album
             <ul>
-                <li><a href="/album/list">List</a></li>
+                <li><a th:href="@{/album/list}">List</a></li>
             </ul>
         </li>
         <li>
             Artist
             <ul>
-                <li><a href="/artist/list">List</a></li>
+                <li><a th:href="@{/artist/list}">List</a></li>
             </ul>
         </li>
         <li>
             Genre
             <ul>
-                <li><a href="/genre/list">List</a></li>
+                <li><a th:href="@{/genre/list}">List</a></li>
             </ul>
         </li>
         <li>
             Invoice
             <ul>
-                <li><a href="/invoice/list">List</a></li>
+                <li><a th:href="@{/invoice/list}">List</a></li>
             </ul>
         </li>
         <li>
             Track
             <ul>
-                <li><a href="/track/list">List</a></li>
+                <li><a th:href="@{/track/list}">List</a></li>
             </ul>
         </li>
     </ul>
