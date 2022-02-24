@@ -1,9 +1,9 @@
 package com.access_and_expose.noroffassignment_6.view;
 
-import com.access_and_expose.noroffassignment_6.data.repository.album.IAlbumRepository;
-import com.access_and_expose.noroffassignment_6.data.repository.artist.IArtistRepository;
-import com.access_and_expose.noroffassignment_6.data.repository.genre.IGenreRepository;
-import com.access_and_expose.noroffassignment_6.data.repository.track.ITrackRepository;
+import com.access_and_expose.noroffassignment_6.data.repository.AlbumRepository;
+import com.access_and_expose.noroffassignment_6.data.repository.ArtistRepository;
+import com.access_and_expose.noroffassignment_6.data.repository.GenreRepository;
+import com.access_and_expose.noroffassignment_6.data.repository.TrackRepository;
 import com.access_and_expose.noroffassignment_6.model.Album;
 import com.access_and_expose.noroffassignment_6.model.Artist;
 import com.access_and_expose.noroffassignment_6.model.Genre;
@@ -25,12 +25,12 @@ public class HomeView {
     private static ArrayList<Genre> genres = new ArrayList<>();
     private static ArrayList<Album> albums = new ArrayList<>();
 
-    private final IArtistRepository artistRepository;
-    private final ITrackRepository trackRepository;
-    private final IGenreRepository genreRepository;
-    private final IAlbumRepository albumRepository;
+    private final ArtistRepository artistRepository;
+    private final TrackRepository trackRepository;
+    private final GenreRepository genreRepository;
+    private final AlbumRepository albumRepository;
 
-    public HomeView(IArtistRepository artistRepository, ITrackRepository trackRepository, IGenreRepository genreRepository, IAlbumRepository albumRepository) {
+    public HomeView(ArtistRepository artistRepository, TrackRepository trackRepository, GenreRepository genreRepository, AlbumRepository albumRepository) {
         this.artistRepository = artistRepository;
         this.trackRepository = trackRepository;
         this.genreRepository = genreRepository;

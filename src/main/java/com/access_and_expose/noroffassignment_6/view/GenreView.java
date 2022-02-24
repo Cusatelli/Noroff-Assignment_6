@@ -1,7 +1,6 @@
 package com.access_and_expose.noroffassignment_6.view;
 
-import com.access_and_expose.noroffassignment_6.data.repository.genre.IGenreRepository;
-import com.access_and_expose.noroffassignment_6.model.Genre;
+import com.access_and_expose.noroffassignment_6.data.service.GenreService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/genre")
 public class GenreView {
 
-    private final IGenreRepository genreRepository;
+    private final GenreService genreService;
 
-    public GenreView(IGenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
+    public GenreView(GenreService genreService) {
+        this.genreService = genreService;
     }
 
     @GetMapping("/list")
     public String view(Model model) {
-        Genre genre = new Genre();
-        model.addAttribute("genres", genreRepository.getAll());
+        model.addAttribute("genres", genreService.getAll());
         return "listGenre";
     }
 }

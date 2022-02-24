@@ -1,6 +1,6 @@
 package com.access_and_expose.noroffassignment_6.view;
 
-import com.access_and_expose.noroffassignment_6.data.repository.customer.ICustomerRepository;
+import com.access_and_expose.noroffassignment_6.data.repository.CustomerRepository;
 import com.access_and_expose.noroffassignment_6.model.customer.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,23 +16,23 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping(value = "/customer")
 public class CustomerView {
 
-    private final ICustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
-    public CustomerView(ICustomerRepository customerRepository) {
+    public CustomerView(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     @GetMapping("/list")
     public String view(Model model) {
         model.addAttribute("customers", customerRepository.getAll());
-        return "listCustomer";
+        return "customerList";
     }
 
     @GetMapping("/add")
     public String addView(Model model) {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
-        return "addCustomer";
+        return "customerAdd";
     }
 
     @PostMapping("/add")
@@ -42,6 +42,6 @@ public class CustomerView {
         }
 
         customerRepository.add(customer);
-        return "addCustomer";
+        return "customerAdd";
     }
 }
