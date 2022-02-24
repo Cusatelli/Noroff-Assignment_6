@@ -50,22 +50,30 @@
 </div>
 
 <div>
-    <form th:action="@{/add}" th:object="${customer}" method="post">
+    <form th:action="@{/customer/add}" th:object="${customer}" method="post">
         <div>
             <label for="CompanyName">First Name:</label>
-            <input id="CompanyName" type="text" th:field="*{firstName}" />
+            <input id="CompanyName" type="text" th:field="*{firstName}" required />
         </div>
         <div>
             <label for="ContactName">Last Name:</label>
-            <input id="ContactName" type="text" th:field="*{lastName}" />
+            <input id="ContactName" type="text" th:field="*{lastName}" required />
         </div>
         <div>
             <label for="Phone">Phone Number:</label>
-            <input id="Phone" type="text" th:field="*{phone}" />
+            <input id="Phone" type="text" th:field="*{phone}" required />
         </div>
         <div>
             <label for="Email">Email:</label>
-            <input id="Email" type="text" th:field="*{email}" />
+            <input id="Email" type="text" th:field="*{email}" required />
+        </div>
+        <div>
+            <label for="Country">Country:</label>
+            <input id="Country" type="text" th:field="*{customerCountry.countryName}" required />
+        </div>
+        <div>
+            <label for="PostalCode">PostalCode:</label>
+            <input id="PostalCode" type="text" th:field="*{customerCountry.postalCode}" required />
         </div>
         <div>
             <input type="submit" value="Submit" />
