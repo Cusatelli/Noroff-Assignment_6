@@ -5,6 +5,7 @@
     <title>Album</title>
 </head>
 <body>
+<div th:insert="navbar::navbar"></div>
 <div>
     <h1>Album List</h1>
     <ul th:each="album: ${albums}">
