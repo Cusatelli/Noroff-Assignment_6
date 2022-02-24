@@ -1,6 +1,7 @@
 package com.access_and_expose.noroffassignment_6.data.repository.customer;
 
 import com.access_and_expose.noroffassignment_6.data.factory.DatabaseConnectionFactory;
+import com.access_and_expose.noroffassignment_6.model.*;
 import com.access_and_expose.noroffassignment_6.model.customer.Customer;
 import com.access_and_expose.noroffassignment_6.model.customer.CustomerCountry;
 
@@ -115,15 +116,75 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public LinkedHashMap<Customer, Integer> getCustomerHighestSpender() {
-        return null;
+    public LinkedHashMap<Customer, Integer> getSpender(Order order) {
+        String ORDER = "";
+        if(order.equals(Order.ASCENDING)) { ORDER = "ASC"; }
+        if(order.equals(Order.DESCENDING)) { ORDER = "DESC"; }
+
+        String SQLQuery = "SELECT Customer.CustomerId, FirstName, LastName, SUM(Total) FROM Customer " +
+                "JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId " +
+                "GROUP BY Invoice.CustomerId ORDER BY SUM(Total) " + ORDER;
+
+        LinkedHashMap<Customer, Integer> customers = new LinkedHashMap<>();
+        try (Connection connection = databaseConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Customer customer = new Customer(
+                        resultSet.getLong("CustomerId"),
+                        resultSet.getString("FirstName"),
+                        resultSet.getString("LastName")
+                );
+                customers.put(customer, resultSet.getInt("SUM(TOTAL)"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return customers;
     }
 
     @Override
-    public LinkedHashMap<String, Integer> sortByCountry() {
+    public LinkedHashMap<Genre, Integer> getFavoriteGenre(String customerId) {
+        String SQLQuery = "SELECT InvoiceLine.InvoiceId, InvoiceLine.TrackId, Invoice.CustomerId, Track.GenreId, Genre.Name, COUNT(Genre.GenreId) " +
+                "FROM InvoiceLine " +
+                "INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId " +
+                "INNER JOIN Track ON InvoiceLine.TrackId = Track.TrackId " +
+                "INNER JOIN Customer ON Invoice.CustomerId = Customer.CustomerId " +
+                "INNER JOIN Genre ON Track.GenreId = Genre.GenreId " +
+                "WHERE Customer.CustomerId = ? " +
+                "GROUP BY Genre.GenreId " +
+                "ORDER BY COUNT(Track.GenreId) DESC";
+
+        LinkedHashMap<Genre, Integer> favorites = new LinkedHashMap<>();
+        try (Connection connection = databaseConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
+            preparedStatement.setString(1, customerId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Genre genre = new Genre(
+                        resultSet.getLong("GenreId"),
+                        resultSet.getString("Name")
+                );
+
+                favorites.put(genre, resultSet.getInt("COUNT(Genre.GenreId)"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return favorites;
+    }
+
+    @Override
+    public LinkedHashMap<String, Integer> sortByCountry(Order order) {
+        String ORDER = "";
+        if(order.equals(Order.ASCENDING)) { ORDER = "ASC"; }
+        if(order.equals(Order.DESCENDING)) { ORDER = "DESC"; }
+
         String SQLQuery = "SELECT Country, COUNT(CustomerId) FROM Customer " +
                 "GROUP BY Country " +
-                "ORDER BY COUNT(CustomerId) DESC";
+                "ORDER BY COUNT(CustomerId) " + ORDER;
 
         LinkedHashMap<String, Integer> countryCount = new LinkedHashMap<>();
         try (Connection connection = databaseConnectionFactory.getConnection()) {
