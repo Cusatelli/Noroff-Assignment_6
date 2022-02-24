@@ -20,6 +20,12 @@
     <ul th:each="artist: ${artists}">
         <li th:text="${artist.getName()}"></li>
     </ul>
+    <div th:if="${albums.size() > 0}">
+        <h1>Album</h1>
+        <ul th:each="album: ${albums}">
+            <li th:text="${album.getTitle()}"></li>
+        </ul>
+    </div>
     <h1>Tracks</h1>
     <ul th:each="track: ${tracks}">
         <li th:text="${track.getName()}"></li>

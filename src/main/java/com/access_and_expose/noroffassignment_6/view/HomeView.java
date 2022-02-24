@@ -42,6 +42,7 @@ public class HomeView {
         initializeRandom(0, 5);
 
         model.addAttribute("artists", artists);
+        model.addAttribute("albums", albums);
         model.addAttribute("tracks", tracks);
         model.addAttribute("genres", genres);
 
@@ -52,6 +53,7 @@ public class HomeView {
     public String searchView(Track track, Model model, @RequestParam(required = true) String keyword) {
         if(keyword == null || keyword.length() <= 1) { // Guard Clause
             model.addAttribute("tracks", tracks);
+            model.addAttribute("albums", albums);
             model.addAttribute("artists", artists);
             model.addAttribute("genres", genres); // Return existing
             return INDEX_HTML;
@@ -62,6 +64,7 @@ public class HomeView {
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("tracks", tracks);
+        model.addAttribute("albums", albums);
         model.addAttribute("artists", artists);
         model.addAttribute("genres", genres);
 
@@ -78,7 +81,6 @@ public class HomeView {
             genres.add(genreRepository.getById(String.valueOf(tracks.get(0).getGenreId())));
         }
     }
-
     private void initializeRandom(int min, int max) {
         int artistSize = artistRepository.getAll().size();
         int trackSize = trackRepository.getAll().size();
@@ -86,15 +88,16 @@ public class HomeView {
 
         for (int i = min; i < max; i++) {
             artists.add(artistRepository.getById(String.valueOf(Math.round(Math.random() * artistSize))));
+            albums.clear();
             tracks.add(trackRepository.getById(String.valueOf(Math.round(Math.random() * trackSize))));
             genres.add(genreRepository.getById(String.valueOf(Math.round(Math.random() * genreSize))));
         }
     }
 
     private void resetAll() {
-        tracks = new ArrayList<>();
-        albums = new ArrayList<>();
-        artists = new ArrayList<>();
-        genres = new ArrayList<>();
+        tracks.clear();
+        albums.clear();
+        artists.clear();
+        genres.clear();
     }
 }
