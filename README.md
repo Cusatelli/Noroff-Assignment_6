@@ -14,6 +14,7 @@
 1. [About the Project](#about-the-project)
 2. [Install](#install)
 3. [Usage](#usage)
+4. [Build & Deploy](#build--deploy)
 5. [Maintainers](#maintainers)
 6. [Contributing](#contributing)
 7. [Conventions](#conventions)
