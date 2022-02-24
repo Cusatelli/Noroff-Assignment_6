@@ -18,15 +18,29 @@ public class AlbumController {
 
     private final AlbumService albumService;
 
+    /**
+     * Constructor injected with services.
+     * @param albumService Album service.
+     */
     public AlbumController(AlbumService albumService) {
         this.albumService = albumService;
     }
 
+    /**
+     * Get Album by id using SQL Queries from SQL Database Chinook.
+     * @param albumId id to search for in Database.
+     * @return Album model object.
+     */
     @GetMapping(value = "/album/id={albumId}")
     public Album getAlbumById(@PathVariable String albumId) {
         return this.albumService.getById(albumId);
     }
 
+    /**
+     * Get Album by name using SQL Queries from SQL Database Chinook.
+     * @param albumName name to search for in Database.
+     * @return Collection of Album model objects.
+     */
     @GetMapping(value="/album/albumName={albumName}")
     public Collection<Album> getAlbumByName(@PathVariable String albumName) {
         return this.albumService.getByName(albumName);
