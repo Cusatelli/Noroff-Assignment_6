@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Controller
 @RequestMapping(value = "/")
 public class HomeView {
+    private static final String INDEX_HTML = "index";
+
+    private static ArrayList<Artist> artists = new ArrayList<>();
+    private static ArrayList<Track> tracks = new ArrayList<>();
+    private static ArrayList<Genre> genres = new ArrayList<>();
+    private static ArrayList<Album> albums = new ArrayList<>();
 
     private final IArtistRepository artistRepository;
     private final ITrackRepository trackRepository;
@@ -35,47 +40,60 @@ public class HomeView {
     // 5 random artists, 5 random songs, and 5 random genres
     @GetMapping("/")
     public String view(Model model) {
-        Collection<Artist> artists = new ArrayList<>();
-        Collection<Track> tracks = new ArrayList<>();
-        Collection<Genre> genres = new ArrayList<>();
-
-        int artistSize = artistRepository.getAll().size();
-        int trackSize = trackRepository.getAll().size();
-        int genreSize = genreRepository.getAll().size();
-
-        for (int i = 0; i < 5; i++) {
-            artists.add(artistRepository.getById(String.valueOf(Math.round(Math.random() * artistSize))));
-            tracks.add(trackRepository.getById(String.valueOf(Math.round(Math.random() * trackSize))));
-            genres.add(genreRepository.getById(String.valueOf(Math.round(Math.random() * genreSize))));
-        }
+        resetAll(); // Reset lists if you want to refresh content.
+        initializeRandom(0, 5);
 
         model.addAttribute("artists", artists);
         model.addAttribute("tracks", tracks);
         model.addAttribute("genres", genres);
-        return "index";
+
+        return INDEX_HTML;
     }
 
     @GetMapping("/search")
     public String searchView(Track track, Model model, String keyword) {
-        if(keyword != null && keyword != " ") {
-            ArrayList<Track> tracks = trackRepository.getByKeyword(keyword);
-            ArrayList<Album> albums = new ArrayList<>();
-            ArrayList<Artist> artists = new ArrayList<>();
-            ArrayList<Genre> genres = new ArrayList<>();
-
-            for (int i = 0; i < tracks.size(); i++) {
-                albums.add(albumRepository.getById(String.valueOf(tracks.get(0).getAlbumId())));
-                Album album = albumRepository.getById(String.valueOf(tracks.get(0).getAlbumId()));
-                artists.add(artistRepository.getById(String.valueOf(album.getArtistId())));
-                genres.add(genreRepository.getById(String.valueOf(tracks.get(0).getGenreId())));
-            }
-
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("tracks", tracks);
-            model.addAttribute("artists", artists);
-            model.addAttribute("genres", genres);
+        if(keyword == null || keyword.equals(" ") || keyword.length() <= 0) { // Guard Clause
+            return INDEX_HTML;
         }
 
-        return "index";
+        resetAll(); // Reset lists if you want to refresh content.
+        getSearch(keyword);
+
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("tracks", tracks);
+        model.addAttribute("artists", artists);
+        model.addAttribute("genres", genres);
+
+        return INDEX_HTML;
+    }
+
+    private void getSearch(String keyword) {
+        tracks = trackRepository.getByKeyword(keyword);
+
+        for (int i = 0; i < tracks.size(); i++) {
+            albums.add(albumRepository.getById(String.valueOf(tracks.get(0).getAlbumId())));
+            Album album = albumRepository.getById(String.valueOf(tracks.get(0).getAlbumId()));
+            artists.add(artistRepository.getById(String.valueOf(album.getArtistId())));
+            genres.add(genreRepository.getById(String.valueOf(tracks.get(0).getGenreId())));
+        }
+    }
+
+    private void initializeRandom(int min, int max) {
+        int artistSize = artistRepository.getAll().size();
+        int trackSize = trackRepository.getAll().size();
+        int genreSize = genreRepository.getAll().size();
+
+        for (int i = min; i < max; i++) {
+            artists.add(artistRepository.getById(String.valueOf(Math.round(Math.random() * artistSize))));
+            tracks.add(trackRepository.getById(String.valueOf(Math.round(Math.random() * trackSize))));
+            genres.add(genreRepository.getById(String.valueOf(Math.round(Math.random() * genreSize))));
+        }
+    }
+
+    private void resetAll() {
+        tracks = new ArrayList<>();
+        albums = new ArrayList<>();
+        artists = new ArrayList<>();
+        genres = new ArrayList<>();
     }
 }
