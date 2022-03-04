@@ -6,7 +6,7 @@
   <p align="center">
     Data access and display
     <br />
-    <a href="https://whispering-meadow-32702.herokuapp.com/">View Demo</a>
+    <a href="https://noroff-assignment7.herokuapp.com/swagger-ui/index.html/">View Demo</a>
   </p>
 </div>
 
@@ -16,7 +16,6 @@
 3. [Usage](#usage)
 4. [Build & Deploy](#build--deploy)
 5. [Demo](#demo)
-6. [Swagger](#swagger)
 7. [Maintainers](#maintainers)
 8. [Contributing](#contributing)
 9. [Conventions](#conventions)
@@ -95,12 +94,7 @@ heroku container:release web
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Demo
-Heroku App: <a href="https://whispering-meadow-32702.herokuapp.com/">https://whispering-meadow-32702.herokuapp.com/</a>
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-# Swagger
-Swagger: <a href="https://whispering-meadow-32702.herokuapp.com/swagger-ui/index.html">https://whispering-meadow-32702.herokuapp.com/swagger-ui/index.html</a>
+Heroku App: <a href="https://noroff-assignment7.herokuapp.com/swagger-ui/index.html">https://noroff-assignment7.herokuapp.com/swagger-ui/index.html</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
